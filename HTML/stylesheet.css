@@ -1,6 +1,48 @@
-body{
-            max-width: 1180px;
-            width: 98%;
-            margin: 0px auto;
-            text-align: left;
+html, body{
+	margin: 0;
+	padding: 0;
+	font-family: 'Montserrat';
+}
+
+.resume {
+  background-color: grey;
+	color:white;
+	display:inline-flex;
+	margin-bottom:20px;
+	font-family: 'Raleway';
+}
+
+.img img{
+	width: 180px;
+	float: left;
+	height: 80%;
+	margin: 40px 0 40px 90px;
+	border-radius: 50%;
+}
+
+.contact h3{
+	background: #f8991b;
+	width: 100%;
+	padding: 10px 20px;
+	color: white;
+}
+
+.about h3{
+	background: #f1585a;
+	width: 95%;
+	padding: 10px 20px;
+	color: white;
+}
+
+.hobby h3{
+	background: #81c242;
+	width: 95%;
+	padding: 10px 20px;
+	color: white;
+}
+.experience h3{
+	background: #81c242;
+	width: 100%;
+	padding: 10px 20px;
+	color: white;
 }
