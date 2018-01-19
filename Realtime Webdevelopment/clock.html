@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>local chat</title>
+<script src = "/socket.io/socket.io.js"></script>
+<style type="text/css">
+body{
+font-weight: 400;
+font-family: sans-serif;
+}
+h1{
+font-weight: 300;
+color: green;
+text-align: center;
+font-size: 24px;
+}
+#contentWrap{
+display: none;
+}
+#chatWrap{
+padding: 10px;
+border: 2px solid black;
+width: 300px;
+box-sizing: border-box;
+background: lightyellow;
+float: left
+}
+#chat{
+overflow-y: scroll;
+height: 500px;
+border: 1px solid green;
+width: 275px;
+background: white;
+padding: 0 10px;
+box-sizing: border-box;
+margin-bottom: 30px;
+}
+#chat ul{
+list-style-type: none;
+padding: 0;
+display: inline-block;
+ 
+}
+#chat ul li{
+padding: 4px;
+box-sizing: border-box;
+border: 1px solid blue;
+background: lightblue;
+margin: 1px 0;
+font-size: 14px;
+width: 250px;
+}
+#chat ul li b{
+border-right: 2px solid #000;
+margin: 0 5px 0 0;
+}
+#chatWrap form input{
+height: 15px;
+margin: 5px;
+padding: 5px 5px;
+width: 250px;
+padding: 10px;
+box-sizing: border-box;
+}
+#contentWrap #users{
+margin-left: 320px;
+width: 200px;
+border: 1px solid black;
+background: linear-gradient(120deg, #eee, #fff);
+ 
+}
+ 
+</style>
+</head>
+<body>
+<h1>Time</h1>
+ <div id="time"></div>
+<div id="nickWrap">
+<p>Enter time to be set:</p>
+<form id="setNick">
+<input size="35" type="text" id="enteredtime" />
+
+<button type="button" id="Set"    >SET</button>
+<button type="button" id="Reset" >Reset</button>
+</form>
+</div>
+<script>
+x=0;
+var socket = io();
+  socket.on('broadcast',function(data){
+  x=1;
+h1=parseInt(data.slice(0,2));
+ m1=parseInt(data.slice(3,5));
+ s1=parseInt(data.slice(6,8));  
+  document.getElementById('time').innerHTML= h1 + ":" + m1 + ":" + s1;
+
+    
+  });
+
+
+
+socket.on('broadcast1',function(data){
+  x=0;
+h1=parseInt(data.slice(0,2));
+ m1=parseInt(data.slice(3,5));
+ s1=parseInt(data.slice(6,8));  
+  document.getElementById('time').innerHTML= h1 + ":" + m1 + ":" + s1;
+
+    
+  });
+  
+var h1;var s1;var m1;
+document.getElementById('Set').onclick = function(e){
+  
+var enteredtime=document.getElementById("enteredtime").value;
+h1=parseInt(enteredtime.slice(0,2));
+ m1=parseInt(enteredtime.slice(3,5));
+ s1=parseInt(enteredtime.slice(6,8));
+x=1;
+//console.log(x);
+//var p=d.setHours(parseInt(h1),parseInt(m1),parseInt(s1));
+<!-- document.getElementById('time').innerHTML = h1 + ":" + m1 + ":" + s1; -->
+}
+
+
+document.getElementById('Reset').onclick = function(e){x=0;
+var today = new Date();
+
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  // add a zero in front of numbers<10
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+  var data =h1 + ":" + m1 + ":" + s1+"";
+socket.emit('clientEvent1',data);
+}
+
+
+function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+
+function startTime() {
+
+if (x==0){
+  var today = new Date();
+
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  // add a zero in front of numbers<10
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+  
+  t = setTimeout(function() {
+    startTime()
+  }, 1000);
+}
+
+if(x==1){
+
+
+document.getElementById('time').innerHTML = h1 + ":" + m1 + ":" + s1;
+var data =h1 + ":" + m1 + ":" + s1+"";
+socket.emit('clientEvent',data);
+ t = setTimeout(function() {
+ s1=s1+1;
+ if(s1==60){
+ s1=0
+ m1=m1+1;
+ }
+ 
+ if(m1==60){
+ m1=0
+ h1=h1+1;
+ }
+ 
+ if(h1==24){
+ h1=0;
+ }
+
+  //m1 = checkTime(m1);
+//  s1 = checkTime(s1);
+
+ startTime()
+  }, 1000);
+
+}
+
+
+}
+
+startTime();</script>
+</body>
+
+
+
