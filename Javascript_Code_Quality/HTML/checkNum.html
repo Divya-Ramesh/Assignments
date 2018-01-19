@@ -1,0 +1,31 @@
+<html>
+<head>
+<script type="text/javascript" src="../JS/checkNum.js"></script>
+</head>
+<body onload="initialize()">
+	<input type="checkbox" id="numberAccept" value="acceptNumber" onclick="checkAcceptNumber()" checked> Accept Number<br>
+	<div id="detail" style="display:none">
+	Enter name : <input type="text" id="text1"></input>
+	<div id="name1">
+		<input type="radio" name="gender" value="male" id="male"> Male<br>
+		<input type="radio" name="gender" value="female" id="female"> Female<br>
+		<button onclick="displayDetails()"> Display </button>
+	</div>
+	<div>
+		<table id="details">
+		<tr>
+		<th>Name</th>
+		<th>Gender</th>
+		<th>Description</th>
+		</tr>
+		</table>
+	</div>
+	</div>
+	<div id="number">
+		Enter: <input type="number" id="text"></input>
+		<br><br>
+		<button onclick="analyzeNumber()" id="analyze"> ANALYZE </button>
+		<p id="display"></p>
+	</div>
+</body>
+</html>
